@@ -35,6 +35,10 @@ const btnMultiply = document.getElementById(`btnMultiply`);
 const btnDivide = document.getElementById(`btnDivide`);
 const btnPeriod = document.getElementById(`btnPeriod`);
 
+// Declaring output field(s)
+
+const results = document.getElementById(`results`);
+
 // Creating an array for the buttons sharing colors to make styling them all easier
 
 const btnNumbersAndOperators = [
@@ -123,3 +127,24 @@ themeThree.addEventListener(`click`, function () {
     btnNumbersAndOperators[i].classList.add(`bg-stone-500`, `text-slate-300`);
   }
 });
+
+// Event listeners for the buttons
+
+btnOne.addEventListener(`click`, function () {});
+btnTwo.addEventListener(`click`, function () {});
+btnThree.addEventListener(`click`, function () {});
+btnFour.addEventListener(`click`, function () {});
+btnFive.addEventListener(`click`, function () {});
+btnSix.addEventListener(`click`, function () {});
+btnSeven.addEventListener(`click`, function () {});
+btnEight.addEventListener(`click`, function () {});
+btnNine.addEventListener(`click`, function () {});
+btnZero.addEventListener(`click`, function () {});
+btnPlus.addEventListener(`click`, function () {});
+btnMinus.addEventListener(`click`, function () {});
+btnDivide.addEventListener(`click`, function () {});
+btnMultiply.addEventListener(`click`, function () {});
+btnPeriod.addEventListener(`click`, function () {});
+btnDel.addEventListener(`click`, function () {});
+btnReset.addEventListener(`click`, function () {});
+btnEquals.addEventListener(`click`, function () {});
