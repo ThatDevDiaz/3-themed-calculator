@@ -59,6 +59,13 @@ const btnNumbersAndOperators = [
   btnPeriod,
 ];
 
+// Array(s) for storing input, output, and calculated results
+
+let displayInput = [];
+let savedInput = [];
+let selectedOperation = ``;
+const output = [];
+
 // Functions to clear classes prior to applying themes
 function clearColors() {
   main.classList.remove(`bg-slate-600`, `bg-red-400`, `bg-stone-700`);
@@ -128,23 +135,74 @@ themeThree.addEventListener(`click`, function () {
   }
 });
 
+// function for joining the clicked input into the display array
+
+function joinArr(num) {
+  if (displayInput[0] == 0) {
+    displayInput.pop(0);
+  }
+  displayInput.push(num);
+  results.innerHTML = displayInput.join(``);
+}
+
+// Functions for when operators are selected to store the first array
+
+function storeInput() {
+  tempInput = displayInput.slice();
+  joinedInput = tempInput.join(``);
+  concatenatedInput = parseInt(joinedInput);
+  return (savedInput = concatenatedInput);
+}
+
 // Event listeners for the buttons
 
-btnOne.addEventListener(`click`, function () {});
-btnTwo.addEventListener(`click`, function () {});
-btnThree.addEventListener(`click`, function () {});
-btnFour.addEventListener(`click`, function () {});
-btnFive.addEventListener(`click`, function () {});
-btnSix.addEventListener(`click`, function () {});
-btnSeven.addEventListener(`click`, function () {});
-btnEight.addEventListener(`click`, function () {});
-btnNine.addEventListener(`click`, function () {});
-btnZero.addEventListener(`click`, function () {});
-btnPlus.addEventListener(`click`, function () {});
+btnOne.addEventListener(`click`, function () {
+  joinArr(1);
+});
+btnTwo.addEventListener(`click`, function () {
+  joinArr(2);
+});
+btnThree.addEventListener(`click`, function () {
+  joinArr(3);
+});
+btnFour.addEventListener(`click`, function () {
+  joinArr(4);
+});
+btnFive.addEventListener(`click`, function () {
+  joinArr(5);
+});
+btnSix.addEventListener(`click`, function () {
+  joinArr(6);
+});
+btnSeven.addEventListener(`click`, function () {
+  joinArr(7);
+});
+btnEight.addEventListener(`click`, function () {
+  joinArr(8);
+});
+btnNine.addEventListener(`click`, function () {
+  joinArr(9);
+});
+btnZero.addEventListener(`click`, function () {
+  joinArr(0);
+});
+btnPlus.addEventListener(`click`, function () {
+  storeInput();
+  selectedOperation = `+`;
+});
 btnMinus.addEventListener(`click`, function () {});
 btnDivide.addEventListener(`click`, function () {});
 btnMultiply.addEventListener(`click`, function () {});
-btnPeriod.addEventListener(`click`, function () {});
+btnPeriod.addEventListener(`click`, function () {
+  joinArr(`.`);
+});
 btnDel.addEventListener(`click`, function () {});
-btnReset.addEventListener(`click`, function () {});
-btnEquals.addEventListener(`click`, function () {});
+btnReset.addEventListener(`click`, function () {
+  displayInput.length = 0;
+  joinArr(0);
+});
+btnEquals.addEventListener(`click`, function () {
+  if (selectedOperation === `+`) {
+    displayInput = displayInput + savedInput;
+  }
+});
