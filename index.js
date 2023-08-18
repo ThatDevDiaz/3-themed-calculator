@@ -59,13 +59,6 @@ const btnNumbersAndOperators = [
   btnPeriod,
 ];
 
-// Array(s) for storing input, output, and calculated results
-
-let displayInput = [];
-let savedInput = [];
-let selectedOperation = ``;
-const output = [];
-
 // Functions to clear classes prior to applying themes
 function clearColors() {
   main.classList.remove(`bg-slate-600`, `bg-red-400`, `bg-stone-700`);
@@ -135,26 +128,111 @@ themeThree.addEventListener(`click`, function () {
   }
 });
 
+// Array(s) for storing input, output, and calculated results
+
+let displayArr = [];
+let savedInput = ``;
+let selectedOperation = ``;
+let displayNumber = ``;
+let output = ``;
+
+// Function to reset displayArr for the reset button and for selecting an operator
+
+function resetDisplayArr() {
+  displayArr = [0];
+  results.innerText = 0;
+}
+
 // function for joining the clicked input into the display array
 
 function joinArr(num) {
-  if (displayInput[0] == 0) {
-    displayInput.pop(0);
+  if (displayArr[0] == 0) {
+    displayArr.pop();
   }
-  displayInput.push(num);
-  results.innerHTML = displayInput.join(``);
+  displayArr.push(num);
+  displayNumber = displayArr.join(``);
+  results.innerHTML = displayNumber;
 }
 
-// Functions for when operators are selected to store the first array
+// Functions for when operators are selected to store the first number and reset display with the new number/operator
 
 function storeInput() {
-  tempInput = displayInput.slice();
-  joinedInput = tempInput.join(``);
-  concatenatedInput = parseInt(joinedInput);
-  return (savedInput = concatenatedInput);
+  savedInput = displayNumber;
+  displayNumber = 0;
+}
+
+// Calculate function
+
+function calculate() {
+  if (selectedOperation === `+`) {
+    output = parseFloat(savedInput) + parseFloat(displayNumber);
+    results.innerText = output;
+    displayNumber = output;
+  } else if (selectedOperation === `-`) {
+    output = parseFloat(savedInput) - parseFloat(displayNumber);
+    results.innerText = output;
+    displayNumber = output;
+  } else if (selectedOperation === `*`) {
+    output = parseFloat(savedInput) * parseFloat(displayNumber);
+    results.innerText = output;
+    displayNumber = output;
+  } else if (selectedOperation === `/`) {
+    output = parseFloat(savedInput) % parseFloat(displayNumber);
+    results.innerText = output;
+    displayNumber = output;
+  }
 }
 
 // Event listeners for the buttons
+//
+
+// Del, Reset, Equals
+
+btnDel.addEventListener(`click`, function () {
+  displayArr.pop(); // Remove the last digit from displayArr
+  displayNumber = displayArr.join(""); // Update displayNumber by joining displayArr
+  results.innerHTML = displayNumber;
+});
+
+btnReset.addEventListener(`click`, function () {
+  resetDisplayArr();
+});
+
+btnEquals.addEventListener(`click`, function () {
+  calculate();
+});
+
+// Operations
+
+btnPlus.addEventListener(`click`, function () {
+  storeInput();
+  selectedOperation = `+`;
+  displayArr = [];
+  results.innerText = selectedOperation;
+});
+btnMinus.addEventListener(`click`, function () {
+  storeInput();
+  selectedOperation = `-`;
+  displayArr = [];
+  results.innerText = selectedOperation;
+});
+btnDivide.addEventListener(`click`, function () {
+  storeInput();
+  selectedOperation = `/`;
+  displayArr = [];
+  results.innerText = selectedOperation;
+});
+btnMultiply.addEventListener(`click`, function () {
+  storeInput();
+  selectedOperation = `*`;
+  displayArr = [];
+  results.innerText = selectedOperation;
+});
+btnPeriod.addEventListener(`click`, function () {
+  joinArr(`.`);
+});
+
+// Numbers
 
 btnOne.addEventListener(`click`, function () {
   joinArr(1);
@@ -185,24 +263,4 @@ btnNine.addEventListener(`click`, function () {
 });
 btnZero.addEventListener(`click`, function () {
   joinArr(0);
-});
-btnPlus.addEventListener(`click`, function () {
-  storeInput();
-  selectedOperation = `+`;
-});
-btnMinus.addEventListener(`click`, function () {});
-btnDivide.addEventListener(`click`, function () {});
-btnMultiply.addEventListener(`click`, function () {});
-btnPeriod.addEventListener(`click`, function () {
-  joinArr(`.`);
-});
-btnDel.addEventListener(`click`, function () {});
-btnReset.addEventListener(`click`, function () {
-  displayInput.length = 0;
-  joinArr(0);
-});
-btnEquals.addEventListener(`click`, function () {
-  if (selectedOperation === `+`) {
-    displayInput = displayInput + savedInput;
-  }
 });
