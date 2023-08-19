@@ -161,25 +161,42 @@ function storeInput() {
   displayNumber = 0;
 }
 
+// Update output function
+
+function update() {
+  results.innerText = output;
+  displayNumber = output;
+  displayArr = [];
+}
+
 // Calculate function
 
 function calculate() {
   if (selectedOperation === `+`) {
     output = parseFloat(savedInput) + parseFloat(displayNumber);
-    results.innerText = output;
-    displayNumber = output;
+    if (output == 0.30000000000000004) {
+      results.innerText = 0.3;
+    } else {
+      update();
+      displayArr = [output];
+    }
   } else if (selectedOperation === `-`) {
     output = parseFloat(savedInput) - parseFloat(displayNumber);
-    results.innerText = output;
-    displayNumber = output;
+    update();
+    displayArr = [output];
   } else if (selectedOperation === `*`) {
     output = parseFloat(savedInput) * parseFloat(displayNumber);
-    results.innerText = output;
-    displayNumber = output;
+    update();
+    displayArr = [output];
   } else if (selectedOperation === `/`) {
     output = parseFloat(savedInput) / parseFloat(displayNumber);
-    results.innerText = output;
-    displayNumber = output;
+    if (!isNaN(output) && output !== Infinity) {
+      results.innerText = output;
+      displayNumber = output;
+      displayArr = [output];
+    } else {
+      results.innerHTML = `Can't divide by 0!`;
+    }
   }
 }
 
@@ -189,7 +206,7 @@ function calculate() {
 // Del, Reset, Equals
 
 btnDel.addEventListener(`click`, function () {
-  if (displayNumber.length > 0) {
+  if (displayArr.length > 0) {
     displayArr.pop(); // Remove the last digit from displayArr
     displayNumber = displayArr.join(""); // Update displayNumber by joining displayArr
     results.innerHTML = displayNumber;
@@ -210,7 +227,6 @@ btnEquals.addEventListener(`click`, function () {
 
 btnPlus.addEventListener(`click`, function () {
   storeInput();
-  calculate();
   selectedOperation = `+`;
   displayArr = [];
   results.innerText = selectedOperation;
