@@ -177,7 +177,7 @@ function calculate() {
     results.innerText = output;
     displayNumber = output;
   } else if (selectedOperation === `/`) {
-    output = parseFloat(savedInput) % parseFloat(displayNumber);
+    output = parseFloat(savedInput) / parseFloat(displayNumber);
     results.innerText = output;
     displayNumber = output;
   }
@@ -189,9 +189,13 @@ function calculate() {
 // Del, Reset, Equals
 
 btnDel.addEventListener(`click`, function () {
-  displayArr.pop(); // Remove the last digit from displayArr
-  displayNumber = displayArr.join(""); // Update displayNumber by joining displayArr
-  results.innerHTML = displayNumber;
+  if (displayNumber.length > 0) {
+    displayArr.pop(); // Remove the last digit from displayArr
+    displayNumber = displayArr.join(""); // Update displayNumber by joining displayArr
+    results.innerHTML = displayNumber;
+  } else {
+    results.innerHTML = 0;
+  }
 });
 
 btnReset.addEventListener(`click`, function () {
@@ -206,6 +210,7 @@ btnEquals.addEventListener(`click`, function () {
 
 btnPlus.addEventListener(`click`, function () {
   storeInput();
+  calculate();
   selectedOperation = `+`;
   displayArr = [];
   results.innerText = selectedOperation;
